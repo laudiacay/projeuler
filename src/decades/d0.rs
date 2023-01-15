@@ -134,9 +134,35 @@ pub fn nth_prime() {
 }
 
 pub fn largest_product_in_a_series() {
-    unimplemented!("largest product in a series");
+    // the largest one is gonna be 13 digits that don't have any zeros in them
+    // read p8.txt
+    let window_size = 13;
+    let digits: Vec<u64> = include_str!("../../data/p8.txt")
+        .replace('\n', "")
+        .chars()
+        .map(|c| c.to_digit(10).unwrap())
+        .map(|x| x as u64)
+        .collect::<Vec<u64>>();
+    let mut max = 0;
+    // this is so slow lmfao but im not gonna prematurely optimize
+    for window_start in 0..digits.len() - window_size {
+        let window = &digits[window_start..window_start + 13];
+        let product = window.iter().product();
+        if product > max {
+            max = product;
+        }
+    }
+    println!("{max}");
 }
 
 pub fn special_pythagorean_triplet() {
-    unimplemented!("special pythagorean triplet");
+    for a in 1..1000 {
+        for b in a..1000 {
+            let c = 1000 - a - b;
+            if a * a + b * b == c * c {
+                println!("{}", a * b * c);
+                return;
+            }
+        }
+    }
 }
